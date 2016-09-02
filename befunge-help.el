@@ -1,4 +1,4 @@
-;;; befunge-help --- Show help for befunge commands
+;;; befunge-help.el --- Show help for befunge commands
 
 ;; Author: Noah Peart <noah.v.peart@gmail.com>
 ;; URL: https://github.com/nverno/befunge
@@ -29,18 +29,17 @@
 
 ;;; Code:
 
-(defvar befunge-docs-dir nil)
-(setq befunge-docs-dir
+(defvar befunge-docs-file nil)
+(setq befunge-docs-file
       (when load-file-name
-        (expand-file-name "doc" (file-name-directory load-file-name))))
+        (expand-file-name "docs" (file-name-directory load-file-name))))
 
 (defvar befunge-help-cache nil)
 (defun befunge-help-data ()
   (or befunge-help-cache
       (progn
         (with-temp-buffer
-          (insert-file-contents
-           (expand-file-name "befunge-data.el" befunge-docs-dir))
+          (insert-file-contents befunge-docs-file)
           (let ((data (car
                        (read-from-string
                         (buffer-substring-no-properties (point-min)
